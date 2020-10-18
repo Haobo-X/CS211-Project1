@@ -429,8 +429,8 @@ void optimal(const double* A, const double* B, double *C, const int n, const int
                             C_2_0 += A_2 * B_0;
                             C_2_1 += A_2 * B_1;
                             C_2_2 += A_2 * B_2;
-
                         }
+                        
                         C[i1 * n + j1] = C_0_0;
                         C[i1 * n + (j1 + 1)] = C_0_1;
                         C[i1 * n + (j1 + 2)] = C_0_2;
@@ -440,7 +440,6 @@ void optimal(const double* A, const double* B, double *C, const int n, const int
                         C[(i1 + 2) * n + j1] = C_2_0;
                         C[(i1 + 2) * n + (j1 + 1)] = C_2_1;
                         C[(i1 + 2) * n + (j1 + 2)] = C_2_2;
-                    
                     }
                 }
             }
