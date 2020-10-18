@@ -135,63 +135,253 @@ void dgemm3(const double *A, const double *B, double *C, const int n)
 //Cache Reuse part 3
 void ijk(const double *A, const double *B, double *C, const int n) 
 {
-
+    int i, j, k;
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            register double R = C[i * n + j];
+            for (k = 0; k < n; k++)
+            {
+                R += A[i * n + k] * B[k * n + j];
+            }
+            C[i * n + j] = R;
+        }
+    }
 }
 
 void bijk(const double *A, const double *B, double *C, const int n, const int b) 
 {
-
+    int i, k, j, i1, k1, j1;
+    for (i = 0; i < n; i += b)
+    {
+        for (j = 0; j < n; j += b)
+        {
+            for (k = 0; k < n; k += b)
+            {
+                for (i1 = i; i1 < i + b && i1 < n; i1++)
+                {
+                    for (j1 = j; j1 < j + b && j1 < n; j1++)
+                    {
+                        register double R = C[i1 * n + j1];
+                        for (k1 = k; k1 < k + b && k1 < n; k1++)
+                        {
+                            R += A[i1 * n + k1] * B[k1 * n + j1];
+                        }
+                        C[i1 * n + j1] = R;
+                    }
+                }
+            }
+        }
+    }
 }
 
 void jik(const double *A, const double *B, double *C, const int n) 
 {
-
+    int j, i, k;
+    for (j = 0; j < n; j++)
+    {
+        for (i = 0; i < n; i++)
+        {
+            register double R = C[i * n + j];
+            for (k = 0; k < n; k++)
+            {
+                R += A[i * n + k] * B[k * n + j];
+            }
+            C[i * n + j] = R;
+        }
+    }
 }
 
 void bjik(const double *A, const double *B, double *C, const int n, const int b) 
 {
-
+    int j, i, k, j1, i1, k1;
+    for (j = 0; j < n; j += b)
+    {
+        for (i = 0; i < n; i += b)
+        {
+            for (k = 0; k < n; k += b)
+            {
+                for (j1 = j; j1 < j + b && j1 < n; j1++)
+                {
+                    for (i1 = i; i1 < i + b && i1 < n; i1++)
+                    {
+                        register double R = C[i1 * n + j1];
+                        for (k1 = k; k1 < k + b && k1 < n; k1++)
+                        {
+                            R += A[i1 * n + k1] * B[k1 * n + j1];
+                        }
+                        C[i1 * n + j1] = R;
+                    }
+                }
+            }
+        }
+    }
 }
 
 void kij(const double *A, const double *B, double *C, const int n) 
 {
-
+    int k, i, j;
+    for (k = 0; k < n; k++)
+    {
+        for (i = 0; i < n; i++)
+        {
+            register double R = A[i * n + k];
+            for (j = 0; j < n; j++)
+            {
+                C[i * n + j] += R * B[k * n + j];
+            }
+        }
+    }
 }
 
 void bkij(const double *A, const double *B, double *C, const int n, const int b) 
 {
-
+    int k, i, j, k1, i1, j1;
+    for (k = 0; k < n; k += b)
+    {
+        for (i = 0; i < n; i += b)
+        {
+            for (j = 0; j < n; j += b)
+            {
+                for (k1 = k; k1 < k + b && k1 < n; k1++)
+                {
+                    for (i1 = i; i1 < i + b && i1 < n; i1++)
+                    {
+                        register double R = A[i1 * n + k1];
+                        for (j1 = j; j1 < j + b && j1 < n; j1++)
+                        {
+                            C[i1 * n + j1] += R * B[k1 * n + j1];
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
 void ikj(const double *A, const double *B, double *C, const int n) 
 {
-
+    int i, k, j;
+    for (i = 0; i < n; i++)
+    {
+        for (k = 0; k < n; k++)
+        {
+            register double R = A[i * n + k];
+            for (j = 0; j < n; j++)
+            {
+                C[i * n + j] += R * B[k * n + j];
+            }
+        }
+    }
 }
 
 void bikj(const double *A, const double *B, double *C, const int n, const int b) 
 {
-
+    int i, k, j, i1, k1, j1;
+    for (i = 0; i < n; i += b)
+    {
+        for (k = 0; k < n; k += b)
+        {
+            for (j = 0; j < n; j += b)
+            {
+                for (i1 = i; i1 < i + b && i1 < n; i1++)
+                {
+                    for (k1 = k; k1 < k + b && k1 < n; k1++)
+                    {
+                        register double R = A[i1 * n + k1];
+                        for (j1 = j; j1 < j + b && j1 < n; j1++)
+                        {
+                            C[i1 * n + j1] += R * B[k1 * n + j1];
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 void jki(const double *A, const double *B, double *C, const int n) 
 {
-
+    int j, k, i;
+    for (j = 0; j < n; j++)
+    {
+        for (k = 0; k < n; k++)
+        {
+            register double R = B[k * n + j];
+            for (i = 0; i < n; i++)
+            {
+                C[i * n + j] += A[i * n + k] * R;
+            }
+        }
+    }
 }
 
 void bjki(const double *A, const double *B, double *C, const int n, const int b) 
 {
-
+    int j, k, i, j1, k1, i1;
+    for (j = 0; j < n; j += b)
+    {
+        for (k = 0; k < n; k += b)
+        {
+            for (i = 0; i < n; i += b)
+            {
+                for (j1 = j; j1 < j + b && j1 < n; j1++)
+                {
+                    for (k1 = k; k1 < k + b && k1 < n; k1++)
+                    {
+                        register double R = B[k1 * n + j1];
+                        for (i1 = i; i1 < i + b && i1 < n; i1++)
+                        {
+                            C[i1 * n + j1] += A[i1 * n + k1] * R;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 void kji(const double *A, const double *B, double *C, const int n) 
 {
-
+    int k, j ,i;
+    for (k = 0; k < n; k++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            register double R = B[k * n + j];
+            for (i = 0; i < n; i++)
+            {
+                C[i * n + j] += A[i * n + k] * R;
+            }
+        }
+    }
 }
 
 void bkji(const double *A, const double *B, double *C, const int n, const int b) 
 {
-
+    int k, j, i, k1, j1, i1;
+    for (k = 0; k < n; k += b)
+    {
+        for (j = 0; j < n; j += b)
+        {
+            for (i = 0; i < n; i += b)
+            {
+                for (k1 = k; k1 < k + b && k1 < n; k1++)
+                {
+                    for (j1 = j; j1 < j + b && j1 < n; j1++)
+                    {
+                        register double R = B[k1 * n + j1];
+                        for (i1 = i; i1 < i + b && i1 < n; i1++)
+                        {
+                            C[i1 * n + j1] += A[i1 * n + k1] * R;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 //Cache Reuse part 3 End 
 
