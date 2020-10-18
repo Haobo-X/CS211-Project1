@@ -414,8 +414,6 @@ void optimal(const double* A, const double* B, double *C, const int n, const int
                             register double A_0 = A[i1 * n + k1];
                             register double A_1 = A[(i1 + 1) * n + k1];
                             register double A_2 = A[(i1 + 2) * n + k1];
-                            
-                            
                             register double B_0 = B[k1 * n + j1];
                             register double B_1 = B[k1 * n + (j1 + 1)];
                             register double B_2 = B[k1 * n + (j1 + 2)];
