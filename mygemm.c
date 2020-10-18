@@ -70,7 +70,7 @@ void dgemm2(const double *A, const double *B, double *C, const int n)
                 C_1_0 += A_1_0 * B_0_0 + A_1_1 * B_1_0;
                 C_1_1 += A_1_0 * B_0_1 + A_1_1 * B_1_1;
             }
-    
+            
             C[i * n + j] = C_0_0;
             C[i * n + (j + 1)] = C_0_1;
             C[(i + 1) * n + j] = C_1_0;            
@@ -117,7 +117,7 @@ void dgemm3(const double *A, const double *B, double *C, const int n)
                 C_2_1 += A_2 * B_1;
                 C_2_2 += A_2 * B_2;
             }
-
+            
             C[i * n + j] = C_0_0;
             C[i * n + (j + 1)] = C_0_1;
             C[i * n + (j + 2)] = C_0_2;
