@@ -493,7 +493,8 @@ void strassen(const double* A, const double* B, double *C, const int n)
                 B_0_0[i * n + j] = B[i * n + j];
                 B_0_1[i * n + j] = B[i * n + (j + n / 2)];
                 B_1_0[i * n + j] = B[(i + n / 2) * n + j];
-                B_1_1[i * n + j] = B[(i + n / 2) * n + (j + n / 2)];            }
+                B_1_1[i * n + j] = B[(i + n / 2) * n + (j + n / 2)];            
+            }
         }
         
         addMatrix(A_0_0, A_1_1, AResult, newSize);
@@ -546,6 +547,7 @@ void strassen(const double* A, const double* B, double *C, const int n)
                 C[(i + n / 2) * n + (j + n / 2)] = C_1_1[i * n + j];
             }
         }
+        
         free(A_0_0);
         free(A_0_1);
         free(A_1_0);
@@ -609,5 +611,3 @@ void mulMatrix(const double* A, const double* B, double* C, const int n)
         }
     }
 }
-
-
